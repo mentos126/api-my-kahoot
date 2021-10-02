@@ -52,6 +52,6 @@ try {
   throw err
 }
 
-server.listen(80, () => {
+server.listen(process.env.PORT, () => {
   console.log('listening on *:' + process?.env?.PORT)
 })
