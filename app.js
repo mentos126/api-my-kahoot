@@ -11,7 +11,7 @@ import playerRoutes from './src/routes/playerRoutes.js'
 import { meetingSockets } from './src/sockets/meetingSockets.js'
 import { playerSockets } from './src/sockets/playerSockets.js'
 
-const configResult = dotenv.config().parsed
+const configResult = dotenv.config()
 const app = express()
 const server = http.createServer(app)
 const socketIo = io(server)
@@ -53,5 +53,5 @@ try {
 }
 
 server.listen(80, () => {
-  console.log('listening on *:' + configResult.APP_PORT)
+  console.log('listening on *:' + process?.env?.PORT)
 })
