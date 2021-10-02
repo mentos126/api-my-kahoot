@@ -6,7 +6,7 @@
   "scripts": {
     "start-no-deprecation": "nodemon --no-deprecation app.js",
     "start": "nodemon app.js",
-    "deploy": "git add . && git commit -m 'up' && git push && git push heroku main"
+    "deploy": "git add . && git commit -m 'up' && git push && git push heroku master"
   },
   "type": "module",
   "keywords": [
