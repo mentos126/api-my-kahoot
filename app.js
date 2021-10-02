@@ -52,6 +52,6 @@ try {
   throw err
 }
 
-server.listen(configResult.APP_PORT ?? 80, () => {
+server.listen(80, () => {
   console.log('listening on *:' + configResult.APP_PORT)
 })
