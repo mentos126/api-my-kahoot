@@ -17,7 +17,7 @@ const server = http.createServer(app)
 const socketIo = io(server)
 
 mongoose.Promise = global.Promise
-mongoose.connect('mongodb://localhost:27017/werewolf', {
+mongoose.connect(process.env.APP_MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
