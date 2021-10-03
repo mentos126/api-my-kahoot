@@ -11,13 +11,13 @@ import playerRoutes from './src/routes/playerRoutes.js'
 import { meetingSockets } from './src/sockets/meetingSockets.js'
 import { playerSockets } from './src/sockets/playerSockets.js'
 
-const configResult = dotenv.config()
+const configResult = dotenv.config().parsed
 const app = express()
 const server = http.createServer(app)
 const socketIo = io(server)
 
 mongoose.Promise = global.Promise
-mongoose.connect(process.env.APP_MONGO_URI, {
+mongoose.connect(process.env.APP_MONGO_URI ? process.env.APP_MONGO_URI : configResult.APP_MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
@@ -27,7 +27,7 @@ mongoose.connect(process.env.APP_MONGO_URI, {
 })
 
 app.use(cors())
-app.use((req, res, next) => {
+app.use((_, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE')
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
@@ -52,6 +52,6 @@ try {
   throw err
 }
 
-server.listen(process.env.PORT, () => {
-  console.log('listening on *:' + process?.env?.PORT)
+server.listen(process.env.PORT ? process.env.PORT : configResult.APP_PORT, () => {
+  console.log(`listening on *: ${process.env.PORT ? process.env.PORT : configResult.APP_PORT}`)
 })

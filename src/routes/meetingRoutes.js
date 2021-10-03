@@ -4,12 +4,6 @@ import repository from '../repositories/MeetingRepository.js'
 
 const router = express.Router()
 
-router.get('/test', (req, res) => {
-  repository.createTest()
-    .then(meeting => res.json(meeting))
-    .catch(error => console.log(error))
-})
-
 router.get('/:id', (req, res) => {
   repository.findByIdentifier(req.params.id)
     .then(meeting => res.json(meeting))

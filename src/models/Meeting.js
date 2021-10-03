@@ -21,23 +21,14 @@ const meetingSchema = new Schema({
   status: {
     type: Number
   },
-  hasCaptain: {
-    type: Boolean
+  questions: {
+    type: Array
   },
   steps: {
     type: Array
   },
   counter: {
     type: Array
-  },
-  cupid: {
-    type: Array
-  },
-  witch: {
-    type: Array
-  },
-  captain: {
-    type: String
   },
   selection: {
     type: Array
