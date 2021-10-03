@@ -4,6 +4,7 @@ const QUESTIONS = [
   {
     category: 'Foot',
     question: 'Qui a gagné l\'euro 2020 ?',
+    image: 'https://editorial.uefa.com/resources/0259-0e5e984029ba-92496b8a95c7-1000/2502796.jpg',
     response: 'Italie',
     otherResponse: [
       'Espagne',
@@ -14,6 +15,7 @@ const QUESTIONS = [
   {
     category: 'Foot',
     question: 'Qui est le plus for ?',
+    image: 'https://static.papergeek.fr/2019/10/ronaldo-vs-messi.jpg',
     response: 'C. Ronaldo',
     otherResponse: [
       'Messi'
@@ -22,6 +24,7 @@ const QUESTIONS = [
   {
     category: 'Foot',
     question: 'Dans quelle équipe joue C. Ronaldo ?',
+    image: 'https://static.cnews.fr/sites/default/files/styles/image_640_360/public/football_record_cristiano_ronaldo_612ff7e894953_0.jpg?itok=N1IQ2haN',
     response: 'Manchester United',
     otherResponse: [
       'Juventus',
@@ -34,5 +37,12 @@ const QUESTIONS = [
 export const questions = QUESTIONS
 
 export const shuffleQuestions = () => {
-  return shuffle(QUESTIONS)
+  const newQuestions = QUESTIONS.map(q => {
+    return {
+      ...q,
+      responses: shuffle([q.response, ...q.otherResponse])
+    }
+  })
+
+  return shuffle(newQuestions)
 }

@@ -24,7 +24,13 @@ const meetingSchema = new Schema({
   questions: {
     type: Array
   },
-  steps: {
+  questionsIndex: {
+    type: Number
+  },
+  step: {
+    type: String
+  },
+  stats: {
     type: Array
   },
   counter: {

@@ -13,7 +13,9 @@ class MeetingRepository {
       players: [],
       status: meetingStatus.INITIALIZED,
       questions: shuffleQuestions(),
-      steps: [],
+      questionsIndex: 0,
+      step: 'loading',
+      stats: [],
       counter: [],
       selection: [],
       inWaiting: []

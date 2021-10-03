@@ -14,6 +14,12 @@ export const playerInPlayers = (players, token) => {
   return false
 }
 
-export const generateStep = (writer, to, message, action = false, player = null, players = null, resume = null, percent = 0, done = []) => {
-  return { writer, to, message, action, percent, done, player, players, resume }
+export const generateStep = (action, loading, question, stats, playerStepAnswers) => {
+  return {
+    action,
+    loading,
+    question,
+    stats,
+    playerStepAnswers
+  }
 }
