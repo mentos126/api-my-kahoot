@@ -69,10 +69,15 @@ export const meetingSockets = (socket, io) => {
           meeting.counter.push(token)
         }
 
+        if (meeting.step !== 'loading') {
+          io.to(meetingIdentifier).emit('game', meeting)
+          return
+        }
+
         if (meeting.counter.length >= meeting.players.length) {
           meeting.counter = []
           meeting.selection = []
-          meeting.step = 'choose'
+          meeting.step = 'question'
         }
 
         io.to(meetingIdentifier).emit('game', meeting)
@@ -105,8 +110,19 @@ export const meetingSockets = (socket, io) => {
         if (meeting.author !== token) {
           return
         }
-
-        console.log('coucou')
+        if (meeting.step === 'question') {
+          meeting.step = 'stats'
+        } else if (meeting.step === 'stats') {
+          meeting.step = 'podium'
+          if (meeting.questionsIndex >= meeting.questions.length - 1) {
+            meeting.step = 'final-podium'
+          }
+        } else if (meeting.step === 'podium') {
+          meeting.step = 'dice'
+          meeting.questionsIndex = meeting.questionsIndex + 1
+        } else if (meeting.step === 'dice') {
+          meeting.step = 'question'
+        }
 
         io.to(meetingIdentifier).emit('game', meeting)
         repository.updateById(meeting._id, meeting).then(res => res)
