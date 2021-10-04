@@ -41,6 +41,9 @@ const meetingSchema = new Schema({
   },
   inWaiting: {
     type: Array
+  },
+  time: {
+    type: Date
   }
 })
 

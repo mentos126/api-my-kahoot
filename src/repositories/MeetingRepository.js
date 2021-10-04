@@ -18,7 +18,8 @@ class MeetingRepository {
       stats: [],
       counter: [],
       selection: [],
-      inWaiting: []
+      inWaiting: [],
+      time: new Date()
     }
     const meeting = new Meeting(newMeeting)
 

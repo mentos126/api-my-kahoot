@@ -77,7 +77,7 @@ export const meetingSockets = (socket, io) => {
         if (meeting.counter.length >= meeting.players.length) {
           meeting.counter = []
           meeting.selection = []
-          meeting.step = 'question'
+          meeting.step = 'first-dice'
         }
 
         io.to(meetingIdentifier).emit('game', meeting)
@@ -91,6 +91,17 @@ export const meetingSockets = (socket, io) => {
         if (playerInPlayers(meeting.players, token) && !meeting.counter.includes(token)) {
           meeting.counter.push(token)
           meeting.stats.push(payload)
+          meeting.players.map(p => {
+            if (p._id === token && payload === meeting.questions[meeting.questionsIndex].response) {
+              const thirtySecondsInMilliSeconds = 30 * 1000
+              const now = new Date().getTime()
+              const res = Math.trunc((thirtySecondsInMilliSeconds - (now - meeting.time.getTime())) / 100)
+
+              p.score = p.score + res
+            }
+
+            return p
+          })
         }
 
         if (meeting.counter.length >= meeting.players.length) {
@@ -113,6 +124,7 @@ export const meetingSockets = (socket, io) => {
         if (meeting.step === 'question') {
           meeting.step = 'stats'
         } else if (meeting.step === 'stats') {
+          meeting.stats = []
           meeting.step = 'podium'
           if (meeting.questionsIndex >= meeting.questions.length - 1) {
             meeting.step = 'final-podium'
@@ -120,8 +132,9 @@ export const meetingSockets = (socket, io) => {
         } else if (meeting.step === 'podium') {
           meeting.step = 'dice'
           meeting.questionsIndex = meeting.questionsIndex + 1
-        } else if (meeting.step === 'dice') {
+        } else if (meeting.step === 'dice' || meeting.step === 'first-dice') {
           meeting.step = 'question'
+          meeting.time = new Date()
         }
 
         io.to(meetingIdentifier).emit('game', meeting)
