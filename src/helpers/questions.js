@@ -69,7 +69,7 @@ const QUESTIONS = [
   },
   {
     category: "C'est du propre",
-    question: 'Qui est le plus for ?',
+    question: 'Qui est le plus fort ?',
     image: 'https://static.papergeek.fr/2019/10/ronaldo-vs-messi.jpg',
     response: 'C. Ronaldo',
     otherResponse: [

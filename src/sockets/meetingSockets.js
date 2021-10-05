@@ -71,6 +71,7 @@ export const meetingSockets = (socket, io) => {
 
         if (meeting.step !== 'loading') {
           io.to(meetingIdentifier).emit('game', meeting)
+          repository.updateById(meeting._id, meeting).then(res => res)
           return
         }
 
@@ -94,7 +95,7 @@ export const meetingSockets = (socket, io) => {
           meeting.players.map(p => {
             if (p._id === token && payload === meeting.questions[meeting.questionsIndex].response) {
               const thirtySecondsInMilliSeconds = 30 * 1000
-              const now = new Date().getTime()
+              const now = time.getTime()
               const res = Math.trunc((thirtySecondsInMilliSeconds - (now - meeting.time.getTime())) / 100)
 
               p.score = p.score + res
@@ -121,7 +122,14 @@ export const meetingSockets = (socket, io) => {
         if (meeting.author !== token) {
           return
         }
-        if (meeting.step === 'question') {
+
+        if (meeting.step === 'loading') {
+          meeting.counter = []
+          meeting.selection = []
+          const now = new Date()
+          meeting.timeToGo = (new Date(now)).setSeconds(now.getSeconds() + 30)
+          meeting.step = 'question'
+        } else if (meeting.step === 'question') {
           meeting.step = 'stats'
         } else if (meeting.step === 'stats') {
           meeting.stats = []
@@ -134,7 +142,10 @@ export const meetingSockets = (socket, io) => {
           meeting.questionsIndex = meeting.questionsIndex + 1
         } else if (meeting.step === 'dice' || meeting.step === 'first-dice') {
           meeting.step = 'question'
+          meeting.counter = []
           meeting.time = new Date()
+          const now = new Date()
+          meeting.timeToGo = (new Date(now)).setSeconds(now.getSeconds() + 30)
         }
 
         io.to(meetingIdentifier).emit('game', meeting)

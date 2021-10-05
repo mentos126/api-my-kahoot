@@ -44,6 +44,9 @@ const meetingSchema = new Schema({
   },
   time: {
     type: Date
+  },
+  timeToGo: {
+    type: Date
   }
 })
 
