@@ -95,7 +95,7 @@ export const meetingSockets = (socket, io) => {
           meeting.players.map(p => {
             if (p._id === token && payload === meeting.questions[meeting.questionsIndex].response) {
               const thirtySecondsInMilliSeconds = 30 * 1000
-              const now = time.getTime()
+              const now = new Date()
               const res = Math.trunc((thirtySecondsInMilliSeconds - (now - meeting.time.getTime())) / 100)
 
               p.score = p.score + res
