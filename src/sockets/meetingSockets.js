@@ -57,8 +57,9 @@ export const meetingSockets = (socket, io) => {
           selection: [],
           inWaiting: []
         }
-        io.to(meetingIdentifier).emit('launchGame')
-        repository.updateById(meeting._id, newMeeting).then(res => res)
+        repository.updateById(meeting._id, newMeeting).then(() => {
+          io.to(meetingIdentifier).emit('launchGame')
+        })
       })
   })
 
