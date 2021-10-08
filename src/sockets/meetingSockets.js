@@ -83,10 +83,6 @@ export const meetingSockets = (socket, io) => {
           meeting.selection = []
           meeting.step = 'first-dice'
 
-          // setTimeout(() => {
-          //   io.to(meetingIdentifier).emit('game', meeting)
-          //   repository.updateById(meeting._id, meeting).then(res => res)
-          // }, 1000)
           io.to(meetingIdentifier).emit('game', meeting)
           repository.updateById(meeting._id, meeting).then(res => res)
         }
