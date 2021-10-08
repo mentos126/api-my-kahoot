@@ -43,6 +43,7 @@ app.use('/meeting', meetingRoutes)
 app.use('/player', playerRoutes)
 
 try {
+  socketIo.set('log level', 0)
   socketIo.on('connection', socket => {
     playerSockets(socket, socketIo)
     meetingSockets(socket, socketIo)
