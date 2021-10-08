@@ -66,14 +66,17 @@ export const meetingSockets = (socket, io) => {
   socket.on('gameInit', ({ token, meetingIdentifier }) => {
     repository.findByIdentifier(meetingIdentifier)
       .then(meeting => {
-        if (playerInPlayers(meeting.players, token) && !meeting.counter.includes(token)) {
-          meeting.counter.push(token)
-        }
-
         if (meeting.step !== 'loading') {
           io.to(meetingIdentifier).emit('game', meeting)
           repository.updateById(meeting._id, meeting).then(res => res)
           return
+        }
+
+        if (playerInPlayers(meeting.players, token) && !meeting.counter.includes(token)) {
+          meeting.counter.push(token)
+          if (meeting.counter.length < meeting.players.length) {
+            repository.updateById(meeting._id, meeting).then(res => res)
+          }
         }
 
         if (meeting.counter.length >= meeting.players.length) {
