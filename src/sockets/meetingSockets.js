@@ -84,10 +84,9 @@ export const meetingSockets = (socket, io) => {
           //   io.to(meetingIdentifier).emit('game', meeting)
           //   repository.updateById(meeting._id, meeting).then(res => res)
           // }, 1000)
+          io.to(meetingIdentifier).emit('game', meeting)
+          repository.updateById(meeting._id, meeting).then(res => res)
         }
-
-        io.to(meetingIdentifier).emit('game', meeting)
-        repository.updateById(meeting._id, meeting).then(res => res)
       })
   })
 
