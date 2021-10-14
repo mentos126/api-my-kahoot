@@ -76,7 +76,7 @@ const howItsWorksQuestions = [
   {
     category: 'Comment ça marche',
     question: 'Que puis-je bien être ?',
-    image: '/img/questions/Image1.png',
+    image: 'https://www.ugap.fr/images/media-wp/2018/07/Loupe_ofcf_fl516r_400.jpg',
     response: 'Un ostéotome',
     otherResponse: [
       'Une rugine',
