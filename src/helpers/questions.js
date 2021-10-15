@@ -260,7 +260,10 @@ export const shuffleQuestions = () => {
   const newQuestions = QUESTIONS.map(q => {
     return {
       ...q,
-      responses: shuffle([q.response, ...shuffle(q.otherResponse.slice(0, 3))])
+      responses: shuffle([
+        q.response,
+        ...shuffle(q.otherResponse.slice(0, 3))
+      ])
     }
   })
 
