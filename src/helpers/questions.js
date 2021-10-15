@@ -43,7 +43,7 @@ const howItsWorksQuestions = [
    */
   {
     category: 'Comment ça marche',
-    question: 'Quelle est la durée maximale de gonflage du garrot chirurgical placé sur un membre supérieur ?',
+    question: 'Quelle est la durée maximale de gonflage du garrot chirurgical placé sur un membre supérieur?',
     image: 'https://www.realme.fr/10584-thickbox_default/garrot-chirurgical-spengler-dts-3000.jpg',
     response: '90 min',
     otherResponse: [
