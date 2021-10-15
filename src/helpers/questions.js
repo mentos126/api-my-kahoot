@@ -29,7 +29,7 @@ const itsCleanQuestions = [
   {
     category: "C'est du propre",
     question: "Lors de la désinfection chirurgicale des mains : je peux installer le patient, après le lavage chirurgical au savon doux et avant l'application de la solution hydro-alcoolique ?",
-    image: 'https://lh3.googleusercontent.com/proxy/NkEx5K3jvpRAUfnEas0cLAmiO0Q6jlUYb9bEqdYYNnqiLUpLk6mTQ8xFHLVr0kphFX-7jCDzprke1ZtR6zMAb0zOKSaqPxcbvC_p4GXtuIWDzHUdcL765lJm83yfH3RvYo_aSXtBVwXddHGIIzDkTptI7EU',
+    image: 'https://d3q6g0wvbller4.cloudfront.net/wp-content/uploads/2020/05/laver-les-mains.jpg',
     response: 'Vrai',
     otherResponse: [
       'Faux'
