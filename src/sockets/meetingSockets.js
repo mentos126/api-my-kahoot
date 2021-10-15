@@ -14,11 +14,15 @@ export const meetingSockets = (socket, io) => {
         ) {
           const newPlayerList = [...meeting.players, player]
           io.to(meeting.identifier).emit('getPlayers', newPlayerList)
-          repository.updateById(meeting._id, { players: newPlayerList }).then(res => res)
+          repository
+            .updateById(meeting._id, { players: newPlayerList })
+            .then(res => res)
+            .catch(error => console.log(error))
         } else {
           io.to(meeting.identifier).emit('getPlayers', meeting.players)
         }
       })
+      .catch(error => console.log(error))
   })
 
   socket.on('deleteMeetingPlayer', ({ meetingIdentifier, player }) => {
@@ -29,7 +33,10 @@ export const meetingSockets = (socket, io) => {
             const newPlayerList = meeting.players.filter(p => p._id !== player._id)
             io.to(meeting.identifier).emit('getPlayers', newPlayerList)
             io.to(meeting.identifier).emit('deletedMeetingPlayer', player)
-            repository.updateById(meeting._id, { players: newPlayerList }).then(res => res)
+            repository
+              .updateById(meeting._id, { players: newPlayerList })
+              .then(res => res)
+              .catch(error => console.log(error))
           } else {
             io.to(meeting.identifier).emit('getPlayers', meeting.players)
           }
@@ -57,10 +64,14 @@ export const meetingSockets = (socket, io) => {
           selection: [],
           inWaiting: []
         }
-        repository.updateById(meeting._id, newMeeting).then(() => {
-          io.to(meetingIdentifier).emit('launchGame')
-        })
+        repository
+          .updateById(meeting._id, newMeeting)
+          .then(() => {
+            io.to(meetingIdentifier).emit('launchGame')
+          })
+          .catch(error => console.log(error))
       })
+      .catch(error => console.log(error))
   })
 
   socket.on('gameInit', ({ token, meetingIdentifier }) => {
@@ -68,14 +79,20 @@ export const meetingSockets = (socket, io) => {
       .then(meeting => {
         if (meeting.step !== 'loading') {
           io.to(meetingIdentifier).emit('game', meeting)
-          repository.updateById(meeting._id, meeting).then(res => res)
+          repository
+            .updateById(meeting._id, meeting)
+            .then(res => res)
+            .catch(error => console.log(error))
           return
         }
 
         if (playerInPlayers(meeting.players, token) && !meeting.counter.includes(token)) {
           meeting.counter.push(token)
           if (meeting.counter.length < meeting.players.length) {
-            repository.updateById(meeting._id, meeting).then(res => res)
+            repository
+              .updateById(meeting._id, meeting)
+              .then(res => res)
+              .catch(error => console.log(error))
           }
         }
 
@@ -84,9 +101,13 @@ export const meetingSockets = (socket, io) => {
           meeting.step = 'first-dice'
 
           io.to(meetingIdentifier).emit('game', meeting)
-          repository.updateById(meeting._id, meeting).then(res => res)
+          repository
+            .updateById(meeting._id, meeting)
+            .then(res => res)
+            .catch(error => console.log(error))
         }
       })
+      .catch(error => console.log(error))
   })
 
   socket.on('chooseResponse', ({ token, meetingIdentifier, payload, time }) => {
@@ -115,8 +136,12 @@ export const meetingSockets = (socket, io) => {
         }
 
         io.to(meetingIdentifier).emit('game', meeting)
-        repository.updateById(meeting._id, meeting).then(res => res)
+        repository
+          .updateById(meeting._id, meeting)
+          .then(res => res)
+          .catch(error => console.log(error))
       })
+      .catch(error => console.log(error))
   })
 
   socket.on('nextStep', ({ token, meetingIdentifier }) => {
@@ -152,8 +177,12 @@ export const meetingSockets = (socket, io) => {
         }
 
         io.to(meetingIdentifier).emit('game', meeting)
-        repository.updateById(meeting._id, meeting).then(res => res)
+        repository
+          .updateById(meeting._id, meeting)
+          .then(res => res)
+          .catch(error => console.log(error))
       })
+      .catch(error => console.log(error))
   })
 
   socket.on('joinRoom', room => socket.join(room))

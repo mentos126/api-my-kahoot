@@ -6,5 +6,6 @@ export const playerSockets = (socket, io) => {
       .then(players => {
         io.emit('test', [...players, player])
       })
+      .catch(error => console.log(error))
   })
 }
